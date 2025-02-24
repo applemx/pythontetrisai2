@@ -52,7 +52,7 @@ def main():
         total_score += line_score
 
         # 実際の評価値を表示(デバッグ用)
-        eval_score = evaluate.evaluate_board(board)
+        eval_score = evaluate.evaluate_board(board,mino_seq[index:])
 
         # 結果を表示
         print(f"Placed {piece} at x={best_x}, rot={best_rot}, line_score={line_score} ,eval_score={eval_score}")

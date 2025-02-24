@@ -31,7 +31,7 @@ def beam_search_solve(initial_board, mino_sequence):
                     # ライン消去＆スコア更新
                     line_score, after_board , cleared = board_logic.clear_lines_and_get_score(temp_board)
                     # 盤面評価
-                    eval_value = evaluate.evaluate_board(after_board,cleared)
+                    eval_value = evaluate.evaluate_board(after_board,cleared,mino_sequence[d:])
                     # 合計スコア: これまでのスコア + 消去スコア + 評価値
                     new_score = cum_score + line_score + eval_value
                     new_moves = moves + [(piece, x, rotation)]
