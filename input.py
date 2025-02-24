@@ -1,4 +1,4 @@
-# input.py
+import random
 
 def read_input_from_file(filename):
     """
@@ -21,3 +21,12 @@ def read_input_from_file(filename):
         raise ValueError("ミノの個数が一致しません")
     
     return N, mino_sequence
+
+def generate_random_mino_sequence(num_pieces=100):
+    """学習用にランダムなミノシーケンスを生成"""
+    mino_sequence = []
+    MINO_TYPES = ['I', 'T', 'L', 'J', 'O', 'S', 'Z']
+    for _ in range(num_pieces):
+        mino_sequence.append(random.choice(MINO_TYPES))
+    
+    return mino_sequence

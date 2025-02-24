@@ -27,13 +27,13 @@ def cleard_lines_eval(board, cleared_lines):
     """
     line_clear_bonus = 0
     if cleared_lines == 1:
-        line_clear_bonus += const.SINGLE
+        line_clear_bonus += const.SINGLE*const.WEIGHTSINGLE
     elif cleared_lines == 2:
-        line_clear_bonus += const.DOUBLE
+        line_clear_bonus += const.DOUBLE*const.WEIGHTDOUBLE
     elif cleared_lines == 3:
-        line_clear_bonus += const.TRIPLE
+        line_clear_bonus += const.TRIPLE*const.WEIGHTTRIPLE
     elif cleared_lines == 4:
-        line_clear_bonus += const.TETRIS  # Tetrisの場合ボーナス
+        line_clear_bonus += const.TETRIS*const.WEIGHTTETRIS  # Tetrisの場合ボーナス
     return line_clear_bonus
 
 
@@ -42,8 +42,7 @@ def if_exits_i(mino_sequence):
     15手以内にIミノが存在するかどうか
     存在すれば 1（True 相当）、なければ 0（False 相当）を返す
     """
-    limit = 15 
-    for i in range(min(limit, len(mino_sequence))):
+    for i in range(min(int(const.ILIMIT*const.WEIGHTILIMIT), len(mino_sequence))):
         if mino_sequence[i] == 'I':
             return 1
     return 0
