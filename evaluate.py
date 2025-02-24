@@ -10,6 +10,10 @@ def evaluate_board(board, cleared_lines=0, mino_sequence=[]):
     bump = bumpiness(board)
     lines = cleard_lines_eval(board, cleared_lines)
     well_score = tetris_i_eval(board, mino_sequence)
+    max_heights = board_height_penalty_eval(board)
+    #print(max_heights)
+    heights8 = board_height_penalty_eval_8(max_heights)
+    heights12 = board_height_penalty_eval_12(max_heights)
 
     score = (
         - const.WEIGHTAGG * agg
@@ -17,6 +21,8 @@ def evaluate_board(board, cleared_lines=0, mino_sequence=[]):
         - const.WEIGHTBUMP * bump
         + lines * const.WEIGHTLINES
         + well_score * const.WEIGHTQUAD  #テトリス井戸の評価を加算
+        - heights8  #盤面の最大高さに応じたペナルティ
+        - heights12  #盤面の最大高さに応じたペナルティ
     )
     return score
 
@@ -103,10 +109,8 @@ def tetris_i_eval(board, mino_sequence):
     # 最大4ラインが狙える (実際には4行より多く埋まっていても、Iミノで消せるのは最大4行)
     potential_clear = min(consecutive_lines, 4)
 
-    # ここで、potential_clear 行のテトリスが狙えるときのボーナスを設定
-    # 値は好きに調整してください（サンプル）
     # 例: 4ライン消去が期待できるなら +50, 3ラインなら +20, 2ラインなら +10, 1ラインなら +5
-    well_score_table = {4: 50, 3: 20, 2: 10, 1: 5, 0: 0}
+    well_score_table = {4: 100, 3: 20, 2: 10, 1: 5, 0: 0}
     # 下記のようにスコアを設定
     well_score = well_score_table.get(potential_clear, 0)
 
@@ -166,3 +170,35 @@ def bumpiness(board):
     for i in range(width - 1):
         bump += abs(col_heights[i] - col_heights[i+1])
     return bump
+
+def board_height_penalty_eval(board):
+    """
+    盤面の最大高さが閾値を超えていればペナルティを返す。
+    """
+    width = const.WIDTH
+    height = const.HEIGHT
+
+    # 各列の高さを計算
+    col_heights = [0] * width
+    for c in range(width):
+        for r in range(height):
+            if board[r][c] == 1:
+                col_heights[c] = height - r
+                break
+
+    # 最大高さを取得
+    max_height = max(col_heights)
+   
+    return max_height
+
+def board_height_penalty_eval_8(max_height):
+    # 8段以上ならペナルティ(PENALTY_HEIGHT_8)
+    if max_height > 8 & max_height <= 12:
+        return const.PENALTY_FOR_8 * const.WEIGHTPENALTY_FOR_8
+    return 0
+
+def board_height_penalty_eval_12(max_height):
+     # 12段以上ならさらにペナルティ(PENALTY_HEIGHT_12)
+    if(max_height > 12):
+        return const.PENALTY_FOR_12 * const.WEIGHTPENALTY_FOR_12
+    return 0

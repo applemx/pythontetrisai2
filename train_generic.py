@@ -22,8 +22,8 @@ def random_individual():
     """
     return [
         random.uniform(-2, 2),  # WEIGHTAGG
-        random.uniform(-2, 2),  # WEIGHTHOLES
-        random.uniform(-2, 2),  # WEIGHTBUMP
+        random.uniform(0, 5),  # WEIGHTHOLES
+        random.uniform(-2, 5),  # WEIGHTBUMP
         random.uniform(0,  5),  # WEIGHTQUAD
         random.uniform(0,  5),  # WEIGHTLINES 
         random.uniform(2,  10),  # WEIGHTSINGLE
@@ -31,6 +31,8 @@ def random_individual():
         random.uniform(0,  7),  # WEIGHTTRIPLE
         random.uniform(0,  2),  # WEIGHTILIMIT
         random.uniform(0,  10),  # WEIGHTTETRIS
+        random.uniform(0,  10),  # WEIGHTPENALTY_FOR_8
+        random.uniform(0,  10)  # WEIGHTPENALTY_FOR_12
     ]
 
 
@@ -49,6 +51,8 @@ def set_individual_to_const(ind):
     const.WEIGHTTRIPLE = ind[7]
     const.WEIGHTILIMIT = ind[8]
     const.WEIGHTTETRIS = ind[9]
+    const.WEIGHTPENALTY_FOR_8 = ind[10]
+    const.WEIGHTPENALTY_FOR_12 = ind[11]
 
 def evaluate_fitness(ind):
     """
