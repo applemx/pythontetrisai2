@@ -6,7 +6,7 @@ import main   # ここで main.py の run_one_game() を呼び出す想定
 # GA(遺伝的アルゴリズム)のパラメータ
 # ---------------------------
 POP_SIZE = 20               # 集団(個体)数
-NUM_GENERATIONS = 6        # 世代数
+NUM_GENERATIONS = 30       # 世代数
 ELITE_SIZE = 4              # エリート選択で残す個体数
 MUTATE_RATE = 0.3           # 突然変異率(突然変異を起こす確率)
 MUTATE_SCALE_INITIAL = 3.0  # 初期の変異幅(大きめ)

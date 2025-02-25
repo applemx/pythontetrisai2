@@ -21,7 +21,7 @@ def run_one_game(filename="mino.txt",mode=0):
     # 入力読み込み(0=>通常1=>学習(ランダム))
     if mode == 0:
         N, mino_seq = input.read_input_from_file(filename)
-    else:
+    elif mode == 1:
         N = 100
         mino_seq = input.generate_random_mino_sequence(100)
 
@@ -55,8 +55,11 @@ def run_one_game(filename="mino.txt",mode=0):
         line_score, board, _ = board_logic.clear_lines_and_get_score(board)
         total_score += line_score
 
-        # デバッグ用に評価値を見たい場合
+        # デバッグ用
         eval_score = evaluate.evaluate_board(board, mino_seq[index:])
+        if mode == 0:
+            with open("output.txt", "a") as f:
+                f.write(f"{piece} {best_x} {best_rot}\n")
         print(f"Placed {piece} at x={best_x}, rot={best_rot}, line_score={line_score}, eval_score={eval_score}")
 
         # 盤面を出力
